@@ -1,0 +1,71 @@
+# Execute na ordem e use o ID retornado no cadastro no lugar de 1.
+# No Thunder Client, repita com a URL pública do Railway após o deploy.
+
+### Página inicial — HTTP 200
+GET http://localhost:8080/
+
+### Status da aplicação — HTTP 200, status online
+GET http://localhost:8080/status
+
+### Versão da aplicação — HTTP 200
+GET http://localhost:8080/versao
+
+### Cadastro de máquina — HTTP 201
+POST http://localhost:8080/maquinas/cadastro
+Content-Type: application/json
+
+{
+  "nome": "Máquina CNC 01",
+  "tipo": "CNC",
+  "setor": "Usinagem",
+  "status": "em operação"
+}
+
+### Listagem das máquinas — HTTP 200
+GET http://localhost:8080/maquinas
+
+### Registro de produção — HTTP 201
+POST http://localhost:8080/producao
+Content-Type: application/json
+
+{
+  "maquinaId": 1,
+  "consumoKw": 12.5,
+  "horarioAcionamento": "08:30",
+  "pecasProduzidas": 150
+}
+
+### Consulta de produção — HTTP 200
+GET http://localhost:8080/producao
+
+### Histórico por máquina — HTTP 200
+GET http://localhost:8080/producao?maquinaId=1
+
+### Atualização da máquina — HTTP 200
+PUT http://localhost:8080/maquinas/1
+Content-Type: application/json
+
+{
+  "nome": "Máquina CNC 01",
+  "tipo": "CNC",
+  "setor": "Usinagem",
+  "status": "em manutenção"
+}
+
+### Exclusão da máquina — HTTP 204, sem corpo
+DELETE http://localhost:8080/maquinas/1
+
+### A máquina excluída sai da listagem — HTTP 200
+GET http://localhost:8080/maquinas
+
+### O histórico da máquina excluída permanece — HTTP 200
+GET http://localhost:8080/producao?maquinaId=1
+
+### Nova tentativa de exclusão — HTTP 404
+DELETE http://localhost:8080/maquinas/1
+
+### Cadastro sem campos obrigatórios — HTTP 400
+POST http://localhost:8080/maquinas/cadastro
+Content-Type: application/json
+
+{}
