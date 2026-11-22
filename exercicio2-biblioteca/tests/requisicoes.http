@@ -1,0 +1,46 @@
+# Use o ID retornado no POST no lugar de 1.
+# No Thunder Client, repita com a URL pública do Railway após o deploy.
+
+### 1. Página inicial — HTTP 200
+GET http://localhost:8081/
+
+### 2. Listagem de livros — HTTP 200
+GET http://localhost:8081/livros
+
+### 3. Cadastro — HTTP 201
+POST http://localhost:8081/livros/cadastrar
+Content-Type: application/json
+
+{
+  "titulo": "Banco de Dados para Iniciantes",
+  "autor": "Maria Souza",
+  "editora": "EduTech",
+  "ano": 2023,
+  "categoria": "Informática",
+  "status": "Disponível"
+}
+
+### 4. Consulta por ID — HTTP 200
+GET http://localhost:8081/livros/1
+
+### 5. Alteração — HTTP 200
+PUT http://localhost:8081/livros/alterar/1
+Content-Type: application/json
+
+{
+  "titulo": "Banco de Dados Essencial",
+  "autor": "Maria Souza",
+  "editora": "EduTech",
+  "ano": 2024,
+  "categoria": "Banco de Dados",
+  "status": "Emprestado"
+}
+
+### Confirmar a alteração — HTTP 200 (ano 2024 e status Emprestado)
+GET http://localhost:8081/livros/1
+
+### 6. Livro inexistente — HTTP 404
+GET http://localhost:8081/livros/999999
+
+### 7. Documentação — HTTP 200
+GET http://localhost:8081/documentacao
